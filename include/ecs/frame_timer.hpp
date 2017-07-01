@@ -14,10 +14,19 @@ public:
   using duration   = std::chrono::duration<representation, precision>;
   using time_point = std::chrono::time_point<clock, duration>;
 
+  frame_timer() : time_(clock::now()) { }
+  frame_timer(const frame_timer&  that) = default;
+  frame_timer(      frame_timer&& temp) = default;
+ ~frame_timer()                         = default;
+
+  frame_timer& operator=(const frame_timer&  that) = default;
+  frame_timer& operator=(      frame_timer&& temp) = default;
+
   void tick()
   {
-    delta_time_ = clock::now() - time_;
-    time_ += delta_time_;
+    auto time   = clock::now();
+    delta_time_ = time - time_;
+    time_       = time;
   }
 
   duration   delta_time() const

@@ -22,7 +22,7 @@ TEST_CASE("Engine is tested", "[engine]") {
 
     }
 
-    void tick() override
+    void update() override
     {
       engine_->stop();
     }
@@ -45,6 +45,33 @@ TEST_CASE("Engine is tested", "[engine]") {
   auto physics_ptr_3  = engine.get_system<physics> ();
   REQUIRE(renderer_ptr_3 == nullptr      );
   REQUIRE(physics_ptr    == physics_ptr_3);
+
+  class mesh      : public ecs::component {};
+  class material  : public ecs::component {};
+  class collider  : public ecs::component {};
+  class rigidbody : public ecs::component {};
+
+  ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry;
+  auto& entities    = registry.access<ecs::entity>();
+  auto& meshes      = registry.access<mesh>       ();
+  auto& materials   = registry.access<material>   ();
+  auto& colliders   = registry.access<collider>   ();
+  auto& rigidbodies = registry.access<rigidbody>  ();
+  entities   .emplace_back();
+  entities   .emplace_back();
+  entities   .emplace_back();
+  entities   .emplace_back();
+  entities   .emplace_back();
+  meshes     .emplace_back();
+  meshes     .emplace_back();
+  meshes     .emplace_back();
+  meshes     .emplace_back();
+  materials  .emplace_back();
+  materials  .emplace_back();
+  materials  .emplace_back();
+  colliders  .emplace_back();
+  colliders  .emplace_back();
+  rigidbodies.emplace_back();
 
   engine.start();
 }

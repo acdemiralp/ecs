@@ -16,9 +16,9 @@ public:
   system& operator=(const system&  that) = default;
   system& operator=(      system&& temp) = default;
 
-  virtual void initialize () {}
-  virtual void tick       () {}
-  virtual void terminate  () {}
+  virtual void initialize () { }
+  virtual void update     () { }
+  virtual void terminate  () { }
 
 protected:
   friend engine;

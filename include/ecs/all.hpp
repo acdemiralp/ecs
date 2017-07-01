@@ -6,7 +6,7 @@
 #include <ecs/entity.hpp>
 #include <ecs/frame_timer.hpp>
 #include <ecs/named.hpp>
-#include <ecs/scene.hpp>
+#include <ecs/registry.hpp>
 #include <ecs/system.hpp>
 
 #endif

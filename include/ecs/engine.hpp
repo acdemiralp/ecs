@@ -5,18 +5,19 @@
 #include <vector>
 
 #include <ecs/frame_timer.hpp>
+#include <ecs/registry.hpp>
 #include <ecs/system.hpp>
 
 namespace ecs
 {
-// Engine owns, initializes, ticks, terminates the systems. 
-class engine
+// Engine owns, initializes, updates, terminates the systems and tracks the time between two updates.
+class engine final
 {
 public:
   engine()                    = default;
   engine(const engine&  that) = delete ;
   engine(      engine&& temp) = default;
-  virtual ~engine()           = default;
+ ~engine()                    = default;
 
   engine& operator=(const engine&  that) = delete ;
   engine& operator=(      engine&& temp) = default;
@@ -53,7 +54,7 @@ public:
     {
       frame_timer_.tick();
       for (auto& system : systems_)
-        system->tick();
+        system->update();
     }
     
     for (auto& system : systems_)
@@ -64,7 +65,7 @@ public:
     is_running_ = false;
   }
 
-protected:
+private:
   template<typename system_type>
   static bool system_match_pred(const std::unique_ptr<system>& iteratee) 
   {

@@ -1,14 +1,14 @@
 #ifndef ECS_ENTITY_HPP_
 #define ECS_ENTITY_HPP_
 
-#include <memory>
-#include <vector>
+#include <boost/dynamic_bitset.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 
 #include <ecs/named.hpp>
 
 namespace ecs
 {
-class entity : public named
+class entity final : public named
 {
 public:
   using named::named;
@@ -16,29 +16,14 @@ public:
   entity()                    = default;
   entity(const entity&  that) = default;
   entity(      entity&& temp) = default;
-  virtual ~entity()           = default;
+ ~entity()                    = default;
 
   entity& operator=(const entity&  that) = default;
   entity& operator=(      entity&& temp) = default;
 
-  template<typename component_type, typename... arguments_type>
-  component_type*                 add_component   (arguments_type&&... arguments)
-  {
-    
-  }
-  template<typename component_type>
-  component_type*                 get_component   (std::size_t index = 0)
-  {
-    
-  }
-  template<typename component_type>
-  std::unique_ptr<component_type> remove_component(std::size_t index = 0)
-  {
-    
-  }
-
 protected:
-  std::vector<std::unique_ptr<component>> components_;
+  std::size_t             id_            ;
+  boost::dynamic_bitset<> component_mask_;
 };
 }
 

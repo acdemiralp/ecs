@@ -19,7 +19,7 @@ set(PROJECT_SOURCES
   include/ecs/entity.hpp
   include/ecs/frame_timer.hpp
   include/ecs/named.hpp
-  include/ecs/scene.hpp
+  include/ecs/registry.hpp
   include/ecs/system.hpp
 )
 include(assign_source_group)
@@ -54,7 +54,6 @@ if(BUILD_TESTS)
     tests/component_test.cpp
     tests/engine_test.cpp
     tests/entity_test.cpp
-    tests/scene_test.cpp
     tests/system_test.cpp
   )
 
