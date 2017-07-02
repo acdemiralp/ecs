@@ -51,12 +51,14 @@ TEST_CASE("Engine is tested", "[engine]") {
   class collider  : public ecs::component {};
   class rigidbody : public ecs::component {};
 
-  ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry;
-  auto& entities    = registry.access<ecs::entity>();
-  auto& meshes      = registry.access<mesh>       ();
-  auto& materials   = registry.access<material>   ();
-  auto& colliders   = registry.access<collider>   ();
-  auto& rigidbodies = registry.access<rigidbody>  ();
+  typedef ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry;
+
+  ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry_instance;
+  auto& entities    = registry_instance.access<ecs::entity>();
+  auto& meshes      = registry_instance.access<mesh>       ();
+  auto& materials   = registry_instance.access<material>   ();
+  auto& colliders   = registry_instance.access<collider>   ();
+  auto& rigidbodies = registry_instance.access<rigidbody>  ();
   entities   .emplace_back();
   entities   .emplace_back();
   entities   .emplace_back();

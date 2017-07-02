@@ -4,15 +4,11 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 
-#include <ecs/named.hpp>
-
 namespace ecs
 {
-class entity final : public named
+class entity final
 {
 public:
-  using named::named;
-
   entity()                    = default;
   entity(const entity&  that) = default;
   entity(      entity&& temp) = default;

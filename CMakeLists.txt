@@ -13,14 +13,14 @@ set(PROJECT_SOURCES
   cmake/assign_source_group.cmake
   cmake/import_library.cmake
 
+  include/ecs/core/component.hpp
+  include/ecs/core/engine.hpp
+  include/ecs/core/entity.hpp
+  include/ecs/core/scene.hpp
+  include/ecs/core/system.hpp
+  include/ecs/utility/frame_timer.hpp
+  include/ecs/utility/registry.hpp
   include/ecs/all.hpp
-  include/ecs/component.hpp  
-  include/ecs/engine.hpp
-  include/ecs/entity.hpp
-  include/ecs/frame_timer.hpp
-  include/ecs/named.hpp
-  include/ecs/registry.hpp
-  include/ecs/system.hpp
 )
 include(assign_source_group)
 assign_source_group(${PROJECT_SOURCES})

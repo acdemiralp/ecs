@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
-#include <ecs/frame_timer.hpp>
-#include <ecs/registry.hpp>
-#include <ecs/system.hpp>
+#include <ecs/core/system.hpp>
+#include <ecs/utility/frame_timer.hpp>
+#include <ecs/utility/registry.hpp>
 
 namespace ecs
 {
