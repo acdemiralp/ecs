@@ -45,12 +45,6 @@ private:
 
   resource_vectors resource_vectors_;
 };
-
-// Dynamic-registry is a run-time defined container of multiple vectors of different types.
-class dynamic_registry final
-{
-  
-};
 }
 
 #endif
