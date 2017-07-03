@@ -11,6 +11,8 @@ public:
   template<typename... argument_types>
   entity* add_entity(argument_types&&... arguments)
   {
+    auto& entity_vector = entity_registry_.access<ecs::entity>();
+    entity_vector.emplace_back(arguments...);
     return nullptr;
   }
   entity* get_entity   (const std::size_t& index)
