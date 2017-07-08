@@ -29,7 +29,7 @@ assign_source_group(${PROJECT_SOURCES})
 include(import_library)
 
 find_package  (Boost REQUIRED)
-import_library(boost Boost_INCLUDE_DIRS)
+import_library(Boost_INCLUDE_DIRS)
 
 ##################################################    Targets     ##################################################
 add_library(${PROJECT_NAME} INTERFACE)
