@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
   include/ecs/core/system.hpp
   include/ecs/utility/frame_timer.hpp
   include/ecs/utility/registry.hpp
+  include/ecs/utility/resource.hpp
   include/ecs/all.hpp
 )
 include(assign_source_group)
@@ -37,7 +38,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_LIBRARIES})
+target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_INCLUDE_DIRS})
+target_link_libraries     (${PROJECT_NAME} INTERFACE ${PROJECT_LIBRARIES})
 
 # Hack for header-only project to appear in the IDEs.
 add_library(${PROJECT_NAME}_ STATIC ${PROJECT_SOURCES})
