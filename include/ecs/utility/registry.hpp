@@ -3,7 +3,8 @@
 
 #include <tuple>
 #include <type_traits>
-#include <vector>
+
+#include <ecs/utility/resource.hpp>
 
 namespace ecs
 {
@@ -13,37 +14,37 @@ class registry final
 {
 public:
   template<typename type>
-  std::vector<type>& access()
+  resource<type>& access()
   {
-    return matching_vector<0, type, resource_vectors, vector_of_type<0, type>::value>::get(resource_vectors_);
+    return matching_resource<0, type, resources, resource_of_type<0, type>::value>::get(resources_);
   }
 
 private:
-  typedef std::tuple<std::vector<types>...> resource_vectors;
+  typedef std::tuple<resource<types>...> resources;
 
   template<int index, typename type>
-  struct vector_of_type : std::is_same<type, typename std::tuple_element<index, resource_vectors>::type::value_type>
+  struct resource_of_type : std::is_same<type, typename std::tuple_element<index, resources>::type::value_type>
   {
     
   };
   template<int index, typename type, typename tuple, bool match = false>
-  struct matching_vector
+  struct matching_resource
   {
-    static std::vector<type>& get(tuple& value)
+    static resource<type>& get(tuple& value)
     {
-      return matching_vector<index + 1, type, tuple, vector_of_type<index + 1, type>::value>::get(value);
+      return matching_resource<index + 1, type, tuple, resource_of_type<index + 1, type>::value>::get(value);
     }
   };
   template<int index, typename type, typename tuple>
-  struct matching_vector<index, type, tuple, true>
+  struct matching_resource<index, type, tuple, true>
   {
-    static std::vector<type>& get(tuple& value)
+    static resource<type>& get(tuple& value)
     {
       return std::get<index>(value);
     }
   };
 
-  resource_vectors resource_vectors_;
+  resources resources_;
 };
 }
 
