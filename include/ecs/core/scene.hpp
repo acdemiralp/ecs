@@ -1,7 +1,7 @@
 #ifndef ECS_SCENE_HPP_
 #define ECS_SCENE_HPP_
 
-#include <ecs/utility/registry.hpp>
+#include <ecs/utility/resource.hpp>
 
 namespace ecs
 {
@@ -9,32 +9,17 @@ class scene final
 {
 public:
   template<typename... argument_types>
-  entity* add_entity(argument_types&&... arguments)
+  resource<entity>::handle add_entity   (argument_types&&...             arguments)
   {
-    auto& entity_vector = entity_registry_.access<ecs::entity>();
-    entity_vector.emplace_back(arguments...);
-    return nullptr;
+    return entities_.add(arguments...);
   }
-  entity* get_entity   (const std::size_t& index)
+  void                     remove_entity(const resource<entity>::handle& handle   )
   {
-    return nullptr;
-  }
-  void    remove_entity(const std::size_t& index)
-  {
-    
-  }
-
-  void    serialize    (const std::string& filepath)
-  {
-    
-  }
-  void    deserialize  (const std::string& filepath)
-  {
-    
+    entities_.remove(handle);
   }
 
 private:
-  registry<ecs::entity> entity_registry_;
+  resource<ecs::entity> entities_;
 };
 }
 
