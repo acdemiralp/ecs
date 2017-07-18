@@ -59,21 +59,31 @@ TEST_CASE("Engine is tested", "[engine]") {
   auto& materials   = registry_instance.access<material>   ();
   auto& colliders   = registry_instance.access<collider>   ();
   auto& rigidbodies = registry_instance.access<rigidbody>  ();
-  entities   .emplace_back();
-  entities   .emplace_back();
-  entities   .emplace_back();
-  entities   .emplace_back();
-  entities   .emplace_back();
-  meshes     .emplace_back();
-  meshes     .emplace_back();
-  meshes     .emplace_back();
-  meshes     .emplace_back();
-  materials  .emplace_back();
-  materials  .emplace_back();
-  materials  .emplace_back();
-  colliders  .emplace_back();
-  colliders  .emplace_back();
-  rigidbodies.emplace_back();
+  entities   .add();
+  entities   .add();
+  entities   .add();
+  entities   .add();
+  entities   .add();
+  meshes     .add();
+  meshes     .add();
+  meshes     .add();
+  meshes     .add();
+  materials  .add();
+  materials  .add();
+  materials  .add();
+  colliders  .add();
+  colliders  .add();
+  rigidbodies.add();
+
+  ecs::resource<float> resource;
+  auto handle  = resource.add(1);
+  auto handle2 = resource.add(2);
+  auto handle3 = resource.add(3);
+  auto handle4 = resource.add(4);
+  handle2.remove();
+  auto handle22 = handle2.get();
+  for(auto& res : resource)
+    std::cout << res.second << std::endl;
 
   engine.start();
 }
