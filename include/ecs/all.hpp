@@ -4,7 +4,6 @@
 #include <ecs/core/component.hpp>
 #include <ecs/core/engine.hpp>
 #include <ecs/core/entity.hpp>
-#include <ecs/core/scene.hpp>
 #include <ecs/core/system.hpp>
 #include <ecs/utility/frame_timer.hpp>
 #include <ecs/utility/registry.hpp>
