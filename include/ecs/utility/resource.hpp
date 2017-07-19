@@ -27,15 +27,18 @@ public:
     {
       return id_ < that.id_;
     }
-    
+
     type* get   ()
     {
-      if (!owner_) 
-        return nullptr;
-      return &(owner_->data_[*this]);
+      return owner_ ? owner_->get(*this) : nullptr;
+    }
+    bool  valid ()
+    {
+      return owner_ && owner_->valid(*this);
     }
     void  remove()
     {
+      if (!valid()) return;
       owner_->remove(*this);
       owner_ = nullptr;
     }
@@ -47,7 +50,10 @@ public:
     std::size_t id_   ;
   };
 
-  typedef type value_type;
+  typedef boost::container::flat_map<handle, type> container_type;
+  typedef typename container_type::mapped_type     value_type    ;
+  typedef typename container_type::iterator        iterator      ;
+  typedef typename container_type::const_iterator  const_iterator;
 
   explicit resource(std::size_t initial_capacity = 1024)
   {
@@ -66,6 +72,19 @@ public:
     data_[key] = type(arguments...);
     return key;
   }
+  type*  get   (const handle&       key      )
+  {
+    assert(key.owner_ == this);
+    return valid(key) ? &(data_[key]) : nullptr;
+  }
+  bool   valid (const handle&       key      )
+  {
+    assert(key.owner_ == this);
+    return      std::find_if  (data_.begin(), data_.end(), [&key] (const std::pair<handle, type>& iteratee)
+    {
+      return key.id_ == iteratee.first.id_;
+    }) != data_.end();
+  }
   void   remove(const handle&       key      )
   {
     assert(key.owner_ == this);
@@ -75,10 +94,22 @@ public:
     }));
   }
 
-  typename boost::container::flat_map<handle, type>::iterator       begin()       { return data_.begin(); }
-  typename boost::container::flat_map<handle, type>::const_iterator begin() const { return data_.begin(); }
-  typename boost::container::flat_map<handle, type>::iterator       end  ()       { return data_.end  (); }
-  typename boost::container::flat_map<handle, type>::const_iterator end  () const { return data_.end  (); }
+  iterator       begin()
+  {
+    return data_.begin();
+  }
+  const_iterator begin() const
+  {
+    return data_.begin();
+  }
+  iterator       end  ()
+  {
+    return data_.end  ();
+  }
+  const_iterator end  () const
+  {
+    return data_.end  ();
+  }
 
 private:
   boost::container::flat_map<handle, type> data_    ;
