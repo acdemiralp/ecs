@@ -8,7 +8,6 @@
 
 namespace ecs
 {
-// Registry is a compile-time defined container of multiple vectors of different types.
 template<typename... types>
 class registry final
 {
