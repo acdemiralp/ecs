@@ -59,9 +59,9 @@ public:
   {
     data_.reserve(initial_capacity);
   }
-  resource(const resource&  that)            = default;
-  resource(      resource&& temp)            = default;
- ~resource()                                 = default;
+  resource           (const resource&  that) = default;
+  resource           (      resource&& temp) = default;
+ ~resource           ()                      = default;
   resource& operator=(const resource&  that) = default;
   resource& operator=(      resource&& temp) = default;
   
@@ -80,7 +80,8 @@ public:
   bool   valid (const handle&       key      )
   {
     assert(key.owner_ == this);
-    return      std::find_if  (data_.begin(), data_.end(), [&key] (const std::pair<handle, type>& iteratee)
+    return std::find_if(data_.begin(), data_.end(), 
+    [&key] (const std::pair<handle, type>& iteratee)
     {
       return key.id_ == iteratee.first.id_;
     }) != data_.end();
@@ -88,7 +89,8 @@ public:
   void   remove(const handle&       key      )
   {
     assert(key.owner_ == this);
-    data_.erase(std::remove_if(data_.begin(), data_.end(), [&key] (const std::pair<handle, type>& iteratee)
+    data_.erase(std::remove_if(data_.begin(), data_.end(), 
+    [&key] (const std::pair<handle, type>& iteratee)
     {
       return key.id_ == iteratee.first.id_;
     }));
@@ -112,8 +114,8 @@ public:
   }
 
 private:
-  boost::container::flat_map<handle, type> data_    ;
-  std::size_t                              next_id_ = 0;
+  container_type data_    ;
+  std::size_t    next_id_ = 0;
 };
 }
 

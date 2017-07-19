@@ -18,8 +18,8 @@ public:
   entity& operator=(      entity&& temp) = default;
 
 protected:
-  std::size_t             id_            ;
-  boost::dynamic_bitset<> component_mask_;
+  std::size_t                        id_            ;
+  boost::dynamic_bitset<std::size_t> component_mask_;
 };
 }
 

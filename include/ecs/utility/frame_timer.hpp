@@ -14,11 +14,10 @@ public:
   using duration   = std::chrono::duration<representation, precision>;
   using time_point = std::chrono::time_point<clock, duration>;
 
-  frame_timer() : time_(clock::now()) { }
-  frame_timer(const frame_timer&  that) = default;
-  frame_timer(      frame_timer&& temp) = default;
- ~frame_timer()                         = default;
-
+  frame_timer           () : time_(clock::now()) { }
+  frame_timer           (const frame_timer&  that) = default;
+  frame_timer           (      frame_timer&& temp) = default;
+ ~frame_timer           ()                         = default;
   frame_timer& operator=(const frame_timer&  that) = default;
   frame_timer& operator=(      frame_timer&& temp) = default;
 

@@ -21,12 +21,12 @@ public:
 private:
   typedef std::tuple<resource<types>...> resources;
 
-  template<int index, typename type>
+  template<std::size_t index, typename type>
   struct resource_of_type : std::is_same<type, typename std::tuple_element<index, resources>::type::value_type>
   {
     
   };
-  template<int index, typename type, typename tuple, bool match = false>
+  template<std::size_t index, typename type, typename tuple, bool match = false>
   struct matching_resource
   {
     static resource<type>& get(tuple& value)
@@ -34,7 +34,7 @@ private:
       return matching_resource<index + 1, type, tuple, resource_of_type<index + 1, type>::value>::get(value);
     }
   };
-  template<int index, typename type, typename tuple>
+  template<std::size_t index, typename type, typename tuple>
   struct matching_resource<index, type, tuple, true>
   {
     static resource<type>& get(tuple& value)
