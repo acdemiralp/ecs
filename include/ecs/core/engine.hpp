@@ -15,7 +15,10 @@ namespace ecs
 class engine final
 {
 public:
-  engine()                    = default;
+  engine() : scene_(std::make_unique<resource<entity>>())
+  {
+    
+  }
   engine(const engine&  that) = delete ;
   engine(      engine&& temp) = default;
  ~engine()                    = default;
@@ -82,10 +85,10 @@ private:
     return typeid(system_type) == typeid(*iteratee.get());
   }
 
-  std::unique_ptr<resource<ecs::entity>> scene_      ;
-  std::vector<std::unique_ptr<system>>   systems_    ;
-  frame_timer<double, std::milli>        frame_timer_;
-  bool                                   is_running_ = false;
+  std::unique_ptr<resource<entity>>    scene_      ;
+  std::vector<std::unique_ptr<system>> systems_    ;
+  frame_timer<double, std::milli>      frame_timer_;
+  bool                                 is_running_ = false;
 };
 }
 
