@@ -54,36 +54,27 @@ TEST_CASE("Engine is tested", "[engine]") {
   typedef ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry;
 
   ecs::registry<ecs::entity, mesh, material, collider, rigidbody> registry_instance;
-  auto& entities    = registry_instance.access<ecs::entity>();
-  auto& meshes      = registry_instance.access<mesh>       ();
-  auto& materials   = registry_instance.access<material>   ();
-  auto& colliders   = registry_instance.access<collider>   ();
-  auto& rigidbodies = registry_instance.access<rigidbody>  ();
-  entities   .add();
-  entities   .add();
-  entities   .add();
-  entities   .add();
-  entities   .add();
-  meshes     .add();
-  meshes     .add();
-  meshes     .add();
-  meshes     .add();
-  materials  .add();
-  materials  .add();
-  materials  .add();
-  colliders  .add();
-  colliders  .add();
-  rigidbodies.add();
-
-  ecs::resource<float> resource;
-  auto handle  = resource.add(1);
-  auto handle2 = resource.add(2);
-  auto handle3 = resource.add(3);
-  auto handle4 = resource.add(4);
-  handle2.remove();
-  auto handle22 = handle2.get();
-  for(auto& res : resource)
-    std::cout << res.second << std::endl;
+  registry_instance.resize(4096);
+  const auto& entities    = registry_instance.access<ecs::entity>();
+  const auto& meshes      = registry_instance.access<mesh>       ();
+  const auto& materials   = registry_instance.access<material>   ();
+  const auto& colliders   = registry_instance.access<collider>   ();
+  const auto& rigidbodies = registry_instance.access<rigidbody>  ();
+  entities   [0];
+  entities   [0];
+  entities   [0];
+  entities   [0];
+  entities   [0];
+  meshes     [0];
+  meshes     [0];
+  meshes     [0];
+  meshes     [0];
+  materials  [0];
+  materials  [0];
+  materials  [0];
+  colliders  [0];
+  colliders  [0];
+  rigidbodies[0];
 
   engine.start();
 }

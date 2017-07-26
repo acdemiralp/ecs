@@ -19,7 +19,6 @@ set(PROJECT_SOURCES
   include/ecs/core/system.hpp
   include/ecs/utility/frame_timer.hpp
   include/ecs/utility/registry.hpp
-  include/ecs/utility/resource.hpp
   include/ecs/all.hpp
 )
 include(assign_source_group)

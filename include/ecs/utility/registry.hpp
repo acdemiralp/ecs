@@ -3,8 +3,7 @@
 
 #include <tuple>
 #include <type_traits>
-
-#include <ecs/utility/resource.hpp>
+#include <vector>
 
 namespace ecs
 {
@@ -13,37 +12,53 @@ class registry final
 {
 public:
   template<typename type>
-  resource<type>& access()
+  const std::vector<type>& access()
   {
-    return matching_resource<0, type, resources, resource_of_type<0, type>::value>::get(resources_);
+    return matching_vector<0, type, vectors, vector_of_type<0, type>::value>::get(vectors_);
+  }
+  void                     resize(std::size_t size)
+  {
+    for_each(vectors_, [size](auto& vector)
+    {
+      vector.resize(size);
+    });
   }
 
 private:
-  typedef std::tuple<resource<types>...> resources;
+  typedef std::tuple<std::vector<types>...> vectors;
 
   template<std::size_t index, typename type>
-  struct resource_of_type : std::is_same<type, typename std::tuple_element<index, resources>::type::value_type>
+  struct vector_of_type : std::is_same<type, typename std::tuple_element<index, vectors>::type::value_type>
   {
     
   };
   template<std::size_t index, typename type, typename tuple, bool match = false>
-  struct matching_resource
+  struct matching_vector
   {
-    static resource<type>& get(tuple& value)
+    static std::vector<type>& get(tuple& value)
     {
-      return matching_resource<index + 1, type, tuple, resource_of_type<index + 1, type>::value>::get(value);
+      return matching_vector<index + 1, type, tuple, vector_of_type<index + 1, type>::value>::get(value);
     }
   };
   template<std::size_t index, typename type, typename tuple>
-  struct matching_resource<index, type, tuple, true>
+  struct matching_vector<index, type, tuple, true>
   {
-    static resource<type>& get(tuple& value)
+    static std::vector<type>& get(tuple& value)
     {
       return std::get<index>(value);
     }
   };
+  
+  template<std::size_t index = 0, typename function_type, typename... tuple_types>
+  typename std::enable_if<index == sizeof...(tuple_types), void>::type for_each(std::tuple<tuple_types...>&      , function_type) { }
+  template<std::size_t index = 0, typename function_type, typename... tuple_types>
+  typename std::enable_if<index <  sizeof...(tuple_types), void>::type for_each(std::tuple<tuple_types...>& tuple, function_type function)
+  {
+    function(std::get<index>(tuple));
+    for_each<index + 1, function_type, tuple_types...>(tuple, function);
+  }
 
-  resources resources_;
+  vectors vectors_;
 };
 }
 
