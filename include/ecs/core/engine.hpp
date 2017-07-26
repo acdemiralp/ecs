@@ -5,9 +5,9 @@
 #include <vector>
 
 #include <ecs/core/entity.hpp>
+#include <ecs/core/scene.hpp>
 #include <ecs/core/system.hpp>
 #include <ecs/utility/frame_timer.hpp>
-#include <ecs/utility/resource.hpp>
 
 namespace ecs
 {
@@ -15,7 +15,7 @@ namespace ecs
 class engine final
 {
 public:
-  engine() : scene_(std::make_unique<resource<entity>>())
+  engine() : scene_(std::make_unique<scene>())
   {
     
   }
@@ -26,13 +26,9 @@ public:
   engine& operator=(const engine&  that) = delete ;
   engine& operator=(      engine&& temp) = default;
   
-  void                   set_scene(std::unique_ptr<resource<ecs::entity>> scene)
+  void   set_scene(std::unique_ptr<scene> scene)
   {
     scene_ = std::move(scene);
-  }
-  resource<ecs::entity>* scene    () const
-  {
-    return scene_.get();
   }
 
   template<typename system_type, typename... arguments_type>
@@ -85,7 +81,7 @@ private:
     return typeid(system_type) == typeid(*iteratee.get());
   }
 
-  std::unique_ptr<resource<entity>>    scene_      ;
+  std::unique_ptr<scene>               scene_      ;
   std::vector<std::unique_ptr<system>> systems_    ;
   frame_timer<double, std::milli>      frame_timer_;
   bool                                 is_running_ = false;
