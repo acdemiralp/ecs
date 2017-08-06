@@ -16,13 +16,19 @@ public:
   system& operator=(const system&  that) = default;
   system& operator=(      system&& temp) = default;
 
-  virtual void initialize () { }
-  virtual void update     () { }
-  virtual void terminate  () { }
+  const engine* owner() const
+  {
+    return owner_;
+  }
 
 protected:
   friend engine;
-  engine* engine_;
+
+  virtual void initialize() { }
+  virtual void update    () { }
+  virtual void terminate () { }
+
+  const engine* owner_;
 };
 }
 

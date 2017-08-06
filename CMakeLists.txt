@@ -19,8 +19,6 @@ set(PROJECT_SOURCES
   include/ecs/core/scene.hpp
   include/ecs/core/system.hpp
   include/ecs/utility/frame_timer.hpp
-  include/ecs/utility/registry.hpp
-  include/ecs/all.hpp
 )
 include(assign_source_group)
 assign_source_group(${PROJECT_SOURCES})
@@ -44,18 +42,16 @@ target_link_libraries     (${PROJECT_NAME} INTERFACE ${PROJECT_LIBRARIES})
 add_library(${PROJECT_NAME}_ STATIC ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME}_ 
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(${PROJECT_NAME}_ PUBLIC ${PROJECT_LIBRARIES})
-set_target_properties(${PROJECT_NAME}_ PROPERTIES LINKER_LANGUAGE CXX)
+target_include_directories(${PROJECT_NAME}_ PUBLIC ${PROJECT_INCLUDE_DIRS})
+target_link_libraries     (${PROJECT_NAME}_ PUBLIC ${PROJECT_LIBRARIES})
+set_target_properties     (${PROJECT_NAME}_ PROPERTIES LINKER_LANGUAGE CXX)
 
 ##################################################    Testing     ##################################################
 if(BUILD_TESTS)
   enable_testing()
 
   set(PROJECT_TEST_SOURCES
-    tests/component_test.cpp
     tests/engine_test.cpp
-    tests/entity_test.cpp
-    tests/system_test.cpp
   )
 
   foreach(_SOURCE ${PROJECT_TEST_SOURCES})

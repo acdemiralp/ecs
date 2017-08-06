@@ -3,6 +3,8 @@
 
 namespace ecs
 {
+class entity;
+
 class component
 {
 public:
@@ -14,8 +16,15 @@ public:
   component& operator=(const component&  that) = default;
   component& operator=(      component&& temp) = default;
 
-protected:
+  const entity* owner() const
+  {
+    return owner_;
+  }
 
+private:
+  friend entity;
+
+  const entity* owner_ = nullptr;
 };
 }
 
