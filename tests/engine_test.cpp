@@ -106,4 +106,13 @@ TEST_CASE("Engine is tested.", "[engine]") {
   auto component_1_ref_3 = entity_1_ref_1->get_component<component_1>();
 
   REQUIRE(nullptr == component_1_ref_3);
+
+  auto entities                        = scene->entities();
+  auto entities_with_component_2       = scene->entities<component_2>();
+  auto entities_with_component_3       = scene->entities<component_3>();
+  auto entities_with_component_2_and_3 = scene->entities<component_2, component_3>();
+
+  REQUIRE(entities_with_component_2      .size() == 1);
+  REQUIRE(entities_with_component_3      .size() == 1);
+  REQUIRE(entities_with_component_2_and_3.size() == 0);
 }
