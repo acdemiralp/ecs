@@ -14,6 +14,7 @@ set(PROJECT_SOURCES
   cmake/import_library.cmake
 
   include/ecs/core/component.hpp
+  include/ecs/core/component_check.hpp
   include/ecs/core/engine.hpp
   include/ecs/core/entity.hpp
   include/ecs/core/scene.hpp

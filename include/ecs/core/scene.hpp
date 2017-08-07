@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <vector>
 
+#include <ecs/core/component_check.hpp>
 #include <ecs/core/entity.hpp>
 
 namespace ecs
@@ -75,6 +76,16 @@ public:
         return iteratee.get();
       });
     return entities;
+  }
+  template<typename... components>
+  std::vector<entity*> entities() const
+  {
+    std::vector<entity*> unfiltered_entities = entities();
+    std::vector<entity*> filtered_entities   ;
+    for(auto& entity : unfiltered_entities)
+      if(component_check<components...>::check(entity))
+        filtered_entities.push_back(entity);
+    return filtered_entities;
   }
 
 protected:
